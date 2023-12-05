@@ -4,6 +4,9 @@ import com.example.demo.Models.Book;
 import com.example.demo.Models.Dto.BookDto;
 import com.example.demo.Repository.BookRepository;
 import com.example.demo.Service.BookService;
+import com.example.demo.exceptions.BadRequestException;
+import com.example.demo.exceptions.NotFoundException;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +27,20 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto getBookById(Long id) {
         Optional<Book> optionalBook=bookRepository.findById(id);
-        return optionalBook.map(this::mapBookToBookDTO).orElse(null);
+        if (optionalBook.isPresent()){
+            return mapBookToBookDTO(optionalBook.get());
+        }
+        else {
+            throw new NotFoundException("Book not found with id: " + id);
+        }
     }
 
     @Override
     public BookDto addBook(BookDto bookDto) {
-        Book book =mapBookDTOToBook(bookDto);
+        if (bookDto.getId() != null){
+            throw new BadRequestException("New book should not have an id.");
+        }
+        Book book=mapBookDTOToBook(bookDto);
         return mapBookToBookDTO(bookRepository.save(book));
     }
 

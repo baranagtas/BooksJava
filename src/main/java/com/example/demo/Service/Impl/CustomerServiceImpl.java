@@ -4,6 +4,7 @@ import com.example.demo.Models.Customer;
 import com.example.demo.Models.Dto.CustomerDto;
 import com.example.demo.Repository.CustomerRepository;
 import com.example.demo.Service.CustomerService;
+import com.example.demo.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto getCustomerById(Long id) {
         Optional<Customer> optionalCustomer=customerRepository.findById(id);
-        return optionalCustomer.map(this::mapCustomerToCustomerDTO).orElse(null);
+        if (optionalCustomer.isPresent()){
+            return mapCustomerToCustomerDTO(optionalCustomer.get());
+        }
+        else{
+            throw new NotFoundException("Customer not found with id: " + id);
+        }
     }
 
     @Override
