@@ -14,26 +14,28 @@ import java.util.List;
 public class BookController {
 
     private BookService bookService;
+
     @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     @GetMapping
-    public List<BookDto> getAllBooks(){
+    public List<BookDto> getAllBooks() {
         return bookService.getAllBooks();
     }
 
     @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id){
+    public BookDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto){
-        return new ResponseEntity<>(bookService.addBook(bookDto),HttpStatus.CREATED);
+    public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+        return new ResponseEntity<>(bookService.addBook(bookDto), HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}/update")
     public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto, @PathVariable("id") Long bookId) {
         BookDto response = bookService.updateBook(bookDto, bookId);

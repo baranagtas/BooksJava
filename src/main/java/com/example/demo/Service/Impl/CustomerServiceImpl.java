@@ -21,10 +21,11 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
+
     @Override
     public List<CustomerDto> getAllCustomers() {
 
-        List<Customer> customers=customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
         return customers.stream()
                 .map(this::mapCustomerToCustomerDTO)
                 .collect(Collectors.toList());
@@ -32,18 +33,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getCustomerById(Long id) {
-        Optional<Customer> optionalCustomer=customerRepository.findById(id);
-        if (optionalCustomer.isPresent()){
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()) {
             return mapCustomerToCustomerDTO(optionalCustomer.get());
-        }
-        else{
+        } else {
             throw new NotFoundException("Customer not found with id: " + id);
         }
     }
 
     @Override
     public CustomerDto addCustomer(CustomerDto customerDto) {
-        Customer customer=mapCustomerDTOToCustomer(customerDto);
+        Customer customer = mapCustomerDTOToCustomer(customerDto);
         return mapCustomerToCustomerDTO(customerRepository.save(customer));
     }
 
@@ -62,32 +62,28 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomerId(Long id) {
 
-        Customer customer = customerRepository.findById(id).orElseThrow(() ->new NotFoundException("Customer could be not delete"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer could be not delete"));
 
         customerRepository.delete(customer);
     }
 
 
-    private Customer mapCustomerDTOToCustomer(CustomerDto customerDto){
+    private Customer mapCustomerDTOToCustomer(CustomerDto customerDto) {
 
-        Customer customer=new Customer();
+        Customer customer = new Customer();
         customer.setId(customerDto.getId());
         customer.setName(customerDto.getName());
 
         return customer;
     }
 
-    private CustomerDto mapCustomerToCustomerDTO(Customer customer){
+    private CustomerDto mapCustomerToCustomerDTO(Customer customer) {
 
-        CustomerDto customerDto=new CustomerDto();
+        CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customer.getId());
         customerDto.setName(customer.getName());
         return customerDto;
     }
-
-
-
-
 
 
 }

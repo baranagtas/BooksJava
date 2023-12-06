@@ -14,40 +14,40 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-        private CustomerService customerService;
+    private CustomerService customerService;
 
-        @Autowired
-        public CustomerController(CustomerService customerService){
-        this.customerService=customerService;
-        }
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
-        @GetMapping
-        public List<CustomerDto> getAllCustomers() {
-            return customerService.getAllCustomers();
-        }
+    @GetMapping
+    public List<CustomerDto> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
 
-        @GetMapping("/{id}")
-        public CustomerDto getCustomerById(@PathVariable Long id) {
-            return customerService.getCustomerById(id);
-        }
+    @GetMapping("/{id}")
+    public CustomerDto getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
+    }
 
-        @PostMapping
-        @ResponseStatus(HttpStatus.CREATED)
-        public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customerDto){
-            return new ResponseEntity<>(customerService.addCustomer(customerDto),HttpStatus.CREATED);
-       }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customerDto) {
+        return new ResponseEntity<>(customerService.addCustomer(customerDto), HttpStatus.CREATED);
+    }
 
-        @PutMapping("/{id}/update")
-        public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable("id") Long id) {
-            CustomerDto response = customerService.updateCustomer(customerDto, id);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
+    @PutMapping("/{id}/update")
+    public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable("id") Long id) {
+        CustomerDto response = customerService.updateCustomer(customerDto, id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-        @DeleteMapping("/{id}/delete")
-        public ResponseEntity<String> deleteCustomer(@PathVariable("id") Long id) {
-            customerService.deleteCustomerId(id);
-            return new ResponseEntity<>("Customer deleted", HttpStatus.OK);
-        }
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deleteCustomer(@PathVariable("id") Long id) {
+        customerService.deleteCustomerId(id);
+        return new ResponseEntity<>("Customer deleted", HttpStatus.OK);
+    }
 
 }
 
