@@ -3,18 +3,27 @@ package com.example.demo.Service.Impl;
 import com.example.demo.Models.Book;
 import com.example.demo.Models.Dto.BookDto;
 import com.example.demo.Repository.BookRepository;
+import com.example.demo.Repository.CustomerRepository;
 import com.example.demo.Service.BookService;
 import com.example.demo.exceptions.BadRequestException;
 import com.example.demo.exceptions.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;
+
+    @Autowired
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
     @Override
     public List<BookDto> getAllBooks() {
 

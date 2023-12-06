@@ -5,14 +5,22 @@ import com.example.demo.Models.Dto.CustomerDto;
 import com.example.demo.Repository.CustomerRepository;
 import com.example.demo.Service.CustomerService;
 import com.example.demo.exceptions.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
     @Override
     public List<CustomerDto> getAllCustomers() {
 
