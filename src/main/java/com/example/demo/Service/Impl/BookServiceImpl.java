@@ -53,6 +53,27 @@ public class BookServiceImpl implements BookService {
         return mapBookToBookDTO(bookRepository.save(book));
     }
 
+    @Override
+    public BookDto updateBook(BookDto bookDto, Long id){
+
+        Book book= bookRepository.findById(id).orElseThrow(()-> new NotFoundException("Book could not be updated"));
+
+        book.setName(bookDto.getName());
+        book.setAuthor(bookDto.getAuthor());
+
+        Book updateBook =bookRepository.save(book);
+
+        return mapBookToBookDTO(updateBook);
+    }
+
+    @Override
+    public void deleteBookId(Long id) {
+
+        Book book= bookRepository.findById(id).orElseThrow(()-> new NotFoundException("Book could not be delete"));
+
+        bookRepository.delete(book);
+
+    }
 
 
     private BookDto mapBookToBookDTO(Book book){

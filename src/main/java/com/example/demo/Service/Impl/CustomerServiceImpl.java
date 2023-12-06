@@ -47,6 +47,26 @@ public class CustomerServiceImpl implements CustomerService {
         return mapCustomerToCustomerDTO(customerRepository.save(customer));
     }
 
+    @Override
+    public CustomerDto updateCustomer(CustomerDto customerDto, Long id) {
+
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer could be not updated"));
+
+        customer.setName(customerDto.getName());
+
+        Customer updateCustomer = customerRepository.save(customer);
+
+        return mapCustomerToCustomerDTO(updateCustomer);
+    }
+
+    @Override
+    public void deleteCustomerId(Long id) {
+
+        Customer customer = customerRepository.findById(id).orElseThrow(() ->new NotFoundException("Customer could be not delete"));
+
+        customerRepository.delete(customer);
+    }
+
 
     private Customer mapCustomerDTOToCustomer(CustomerDto customerDto){
 

@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import com.example.demo.Models.Dto.BookDto;
 import com.example.demo.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +33,15 @@ public class BookController {
     public BookDto addBook(@RequestBody BookDto bookDto){
         return bookService.addBook(bookDto);
     }
+    @PutMapping("/{id}/update")
+    public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto, @PathVariable("id") Long bookId) {
+        BookDto response = bookService.updateBook(bookDto, bookId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<String> deleteBook(@PathVariable("id") Long bookId) {
+        bookService.deleteBookId(bookId);
+        return new ResponseEntity<>("Book deleted", HttpStatus.OK);
+    }
 }
