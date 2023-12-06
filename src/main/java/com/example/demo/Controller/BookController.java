@@ -30,8 +30,9 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto addBook(@RequestBody BookDto bookDto){
-        return bookService.addBook(bookDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto){
+        return new ResponseEntity<>(bookService.addBook(bookDto),HttpStatus.CREATED);
     }
     @PutMapping("/{id}/update")
     public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto, @PathVariable("id") Long bookId) {

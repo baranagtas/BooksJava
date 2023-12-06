@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Models.Dto.BookDto;
 import com.example.demo.Models.Dto.CustomerDto;
 import com.example.demo.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,10 @@ public class CustomerController {
         }
 
         @PostMapping
-        public CustomerDto addCustomer(@RequestBody CustomerDto customerDTO) {
-            return customerService.addCustomer(customerDTO);
-        }
+        @ResponseStatus(HttpStatus.CREATED)
+        public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customerDto){
+            return new ResponseEntity<>(customerService.addCustomer(customerDto),HttpStatus.CREATED);
+       }
 
         @PutMapping("/{id}/update")
         public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto, @PathVariable("id") Long id) {
