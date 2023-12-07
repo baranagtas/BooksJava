@@ -11,3 +11,10 @@ public class DemoApplication {
 	}
 
 }
+/*
+<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+ */
