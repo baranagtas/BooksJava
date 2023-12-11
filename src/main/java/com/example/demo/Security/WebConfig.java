@@ -1,3 +1,4 @@
+/*
 package com.example.demo.Security;
 
 import org.springframework.context.annotation.Configuration;
@@ -15,3 +16,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 }
+*/

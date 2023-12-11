@@ -43,7 +43,7 @@ public class AuthController {
     public ResponseEntity<String> loginUser(@RequestBody MyUser myUser) {
         MyUser authenticatedUser = userService.loginUser(myUser.getUsername(), myUser.getPassword());
 
-        if (authenticatedUser != null) {
+        if (authenticatedUser != null && passwordEncoder.matches(myUser.getPassword(), authenticatedUser.getPassword())) {
             // Kullanıcı başarılı bir şekilde kimlik doğrulandı, JWT token oluştur
             String token = jwtUtil.generateToken(authenticatedUser.getUsername());
 
