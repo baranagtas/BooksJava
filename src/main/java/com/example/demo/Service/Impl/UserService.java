@@ -54,7 +54,6 @@ public class UserService {
    /* public MyUser loginUser(String username, String password) {
         MyUser user = userRepository.findByUsername(username);
         if (user != null) {
-            // Verify the provided password against the stored password
             boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
             if (passwordMatches) {
                 return user;
