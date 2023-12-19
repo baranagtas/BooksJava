@@ -5,6 +5,9 @@ import com.example.demo.Repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -25,12 +28,38 @@ public class UserService {
         registerUser.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(registerUser);
     }
-    public MyUser loginUser(String username, String password) {
+  /*  public MyUser loginUser(String username, String password) {
         MyUser user = userRepository.findByUsername(username);
-        if (user != null && passwordEncoder.matches(password,
-                user.getPassword())) {
+        if (user != null && passwordEncoder.matches(password,user.getPassword())) {
             return user;
         }
         return null;
+    }*/
+    public Optional<MyUser> loginUser(String username, String password){
+        MyUser user =userRepository.findByUsername(username);
+        return Optional.ofNullable(user)
+                .filter(u -> passwordEncoder.matches(password,user.getPassword()));
     }
+/*
+    public ResponseEntity<MyUser> loginUser(String username, String password) {
+        MyUser user = userRepository.findByUsername(username);
+        return Optional.ofNullable(user)
+                .filter(u -> passwordEncoder.matches(password, u.getPassword()))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+    }
+    */
+
+
+   /* public MyUser loginUser(String username, String password) {
+        MyUser user = userRepository.findByUsername(username);
+        if (user != null) {
+            // Verify the provided password against the stored password
+            boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
+            if (passwordMatches) {
+                return user;
+            }
+        }
+        return null;
+    }*/
 }
